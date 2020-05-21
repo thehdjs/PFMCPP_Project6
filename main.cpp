@@ -1,4 +1,4 @@
-/*
+     /*
  Project 6: Part 1 / 2
  Video: Chapter 3 Part 2
 
@@ -74,23 +74,26 @@ struct T
 
 struct Comparator                                //4
 {
-    T* compare(T* a, T* b) //5
+    T* compare(T* a = nullptr, T* b = nullptr)//5
     {
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
-        return nullptr;
+        if (a != nullptr && b != nullptr)
+        {
+        if(a->value < b->value) return a;
+        if(a->value > b->value) return b;
+        }
+        return nullptr;   
     }
 };
 
 struct U
 {
     float f1 { 0 }, f2 { 0 };
-    float multiply(float* newValue)      //12
+    float multiply(float* newValue = nullptr)      //12
     {
         std::cout << "U's f1 value: " << f1 << std::endl;
-        f1 = *newValue;
+        if (newValue != nullptr) f1 = *newValue;
         std::cout << "U's f1 updated value: " << f1 << std::endl;
-        while( std::abs(f2 - f1) > 0.001f )
+        while(std::abs(f2 - f1) > 0.001f)
         {
             /*
              write something that makes the distance between f2 and f1 get smaller
@@ -108,12 +111,12 @@ struct U
 
 struct Mult
 {
-    static float multiply(U* that, float* newValue )        //10
+    static float multiply(U* that = nullptr, float* newValue = nullptr)    //10
     {
         std::cout << "U's f1 value: " << that->f1 << std::endl;
-        that->f1 = *newValue;
+        if (that != nullptr && newValue != nullptr) that->f1 = *newValue;
         std::cout << "U's f1 updated value: " << that->f1 << std::endl;
-        while( std::abs(that->f2 - that->f1) > 0.001f )
+        while( std::abs(that->f2 - that->f1) > 0.001f)
         {
             /*
              write something that makes the distance between that->f2 and that->f1 get smaller
@@ -132,11 +135,11 @@ struct Mult
 int main()
 {
     T aTinstance(0.05f , "aTinstance");                                   //6
-    T anotherTinstance( 0.7f, "anotherTinstance");                       //6
+    T anotherTinstance(0.7f, "anotherTinstance");                       //6
     
     Comparator f;                                            //7
     
-    auto* smaller = f.compare( &aTinstance, &anotherTinstance );          //8
+    auto* smaller = f.compare(&aTinstance, &anotherTinstance);          //8
     
     if (smaller != nullptr)
     {
@@ -145,10 +148,10 @@ int main()
 
     U aUinstance;
     float updatedValue = 5.f;
-    std::cout << "[static func] aUinstance's multiplied values: " << Mult::multiply( &aUinstance, &updatedValue ) << std::endl;                  //11
+    std::cout << "[static func] aUinstance's multiplied values: " << Mult::multiply(&aUinstance, &updatedValue) << std::endl;                  //11
     
     U anotherUinstance;
-    std::cout << "[member func] anotherUinstance's multiplied values: " << anotherUinstance.multiply( &updatedValue ) << std::endl;
+    std::cout << "[member func] anotherUinstance's multiplied values: " << anotherUinstance.multiply(&updatedValue) << std::endl;
 }
 
         
