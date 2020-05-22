@@ -78,8 +78,8 @@ struct Comparator                                //4
     {
         if (a != nullptr && b != nullptr)
         {
-        if(a->value < b->value) return a;
-        if(a->value > b->value) return b;
+            if(a->value < b->value) return a;
+            if(a->value > b->value) return b;
         }
         return nullptr;   
     }
@@ -88,10 +88,11 @@ struct Comparator                                //4
 struct U
 {
     float f1 { 0 }, f2 { 0 };
-    float multiply(float* newValue = nullptr)      //12
+    float multiply(float* newValue)      //12
     {
         std::cout << "U's f1 value: " << f1 << std::endl;
-        if (newValue != nullptr) f1 = *newValue;
+        if (newValue == nullptr) return 0;
+        f1 = *newValue;
         std::cout << "U's f1 updated value: " << f1 << std::endl;
         while(std::abs(f2 - f1) > 0.001f)
         {
@@ -111,10 +112,11 @@ struct U
 
 struct Mult
 {
-    static float multiply(U* that = nullptr, float* newValue = nullptr)    //10
+    static float multiply(U* that, float* newValue)    //10
     {
         std::cout << "U's f1 value: " << that->f1 << std::endl;
-        if (that != nullptr && newValue != nullptr) that->f1 = *newValue;
+        if (that == nullptr || newValue == nullptr) return 0;
+        that->f1 = *newValue;
         std::cout << "U's f1 updated value: " << that->f1 << std::endl;
         while( std::abs(that->f2 - that->f1) > 0.001f)
         {
