@@ -1,4 +1,4 @@
-/*
+     /*
  Project 6: Part 1 / 2
  Video: Chapter 3 Part 2
 
@@ -64,64 +64,96 @@ send me a DM to check your pull request
 #include <string>
 struct T
 {
-    T(<#type name#> v, const char* <#variable name#>)   //1
-    //2
-    //3
+    T(float v, const char* n) :
+    value(v),
+    name(n)
+    {}  //1
+    float value;//2
+    std::string name;//3
 };
 
-struct <#structName1#>                                //4
+struct Comparator                                //4
 {
-    <#type name#> compare(<#type name#> a, <#type name#> b) //5
+    T* compare(T* a = nullptr, T* b = nullptr)//5
     {
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
-        return nullptr;
+        if (a != nullptr && b != nullptr)
+        {
+            if(a->value < b->value) return a;
+            if(a->value > b->value) return b;
+        }
+        return nullptr;   
     }
 };
 
 struct U
 {
-    float <#name1#> { 0 }, <#name2#> { 0 };
-    <#returnType#> <#memberFunction#>(<#type name#>* <#updatedValue#>)      //12
+    float f1 { 0 }, f2 { 0 };
+    float multiply(float* newValue)      //12
     {
-        
+        std::cout << "U's f1 value: " << f1 << std::endl;
+        if (newValue == nullptr) return 0;
+        f1 = *newValue;
+        std::cout << "U's f1 updated value: " << f1 << std::endl;
+        while(std::abs(f2 - f1) > 0.001f)
+        {
+            /*
+             write something that makes the distance between f2 and f1 get smaller
+             */
+            if (f1 > f2) 
+            {
+                f2 += 0.001f;
+            }
+            else f2 -= 0.001f;
+        }
+        std::cout << "U's f2 updated value: " << f2 << std::endl;
+        return f2 * f1;
     }
 };
 
-struct <#structname2#>
+struct Mult
 {
-    static <#returntype#> <#staticFunctionA#>(U* that, <#type name#>* <#updatedValue#> )        //10
+    static float multiply(U* that, float* newValue)    //10
     {
-        std::cout << "U's <#name1#> value: " << that-><#name1#> << std::endl;
-        that-><#name1#> = <#updatedValue#>;
-        std::cout << "U's <#name1#> updated value: " << that-><#name1#> << std::endl;
-        while( std::abs(that-><#name2#> - that-><#name1#>) > 0.001f )
+        std::cout << "U's f1 value: " << that->f1 << std::endl;
+        if (that == nullptr || newValue == nullptr) return 0;
+        that->f1 = *newValue;
+        std::cout << "U's f1 updated value: " << that->f1 << std::endl;
+        while( std::abs(that->f2 - that->f1) > 0.001f)
         {
             /*
-             write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
+             write something that makes the distance between that->f2 and that->f1 get smaller
              */
-            that-><#name2#> += ;
+            if (that->f1 > that->f2) 
+            {
+                that->f2 += 0.001f;
+            }
+            else that->f2 -= 0.001f;
         }
-        std::cout << "U's <#name2#> updated value: " << that-><#name2#> << std::endl;
-        return that-><#name2#> * that-><#name1#>;
+        std::cout << "U's f2 updated value: " << that->f2 << std::endl;
+        return that->f2 * that->f1;
     }
 };
         
 int main()
 {
-    T <#name1#>( , );                                             //6
-    T <#name2#>( , );                                             //6
+    T aTinstance(0.05f , "aTinstance");                                   //6
+    T anotherTinstance(0.7f, "anotherTinstance");                       //6
     
-    <#structName1#> f;                                            //7
-    auto* smaller = f.compare( , );                              //8
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    Comparator f;                                            //7
     
-    U <#name3#>;
+    auto* smaller = f.compare(&aTinstance, &anotherTinstance);          //8
+    
+    if (smaller != nullptr)
+    {
+        std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    }
+
+    U aUinstance;
     float updatedValue = 5.f;
-    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
+    std::cout << "[static func] aUinstance's multiplied values: " << Mult::multiply(&aUinstance, &updatedValue) << std::endl;                  //11
     
-    U <#name4#>;
-    std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
+    U anotherUinstance;
+    std::cout << "[member func] anotherUinstance's multiplied values: " << anotherUinstance.multiply(&updatedValue) << std::endl;
 }
 
         
