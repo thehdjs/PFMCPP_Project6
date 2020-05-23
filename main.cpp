@@ -95,8 +95,10 @@ int main()
     
     auto* smaller = f.compare(&aTinstance, &anotherTinstance);          //8
     
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
-
+    if (smaller != nullptr)
+    {
+        std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    }
     U aUinstance;
     float updatedValue = 5.f;
     std::cout << "[static func] aUinstance's multiplied values: " << Mult::multiply(aUinstance, updatedValue) << std::endl;                  //11
