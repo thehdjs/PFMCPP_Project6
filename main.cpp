@@ -31,25 +31,22 @@ struct T
 
 struct Comparator                                //4
 {
-    T* compare(T* a = nullptr, T* b = nullptr)//5
+    T compare(T& a, T& b)//5
     {
-        if (a != nullptr && b != nullptr)
-        {
-            if(a->value < b->value) return a;
-            if(a->value > b->value) return b;
-        }
-        return nullptr;   
+        if(a.value < b.value) return a;
+        if(a.value > b.value) return b;
+        T noneOfThem(0, "none of them");
+        return noneOfThem;
     }
 };
 
 struct U
 {
     float f1 { 0 }, f2 { 0 };
-    float multiply(float* newValue)      //12
+    float multiply(const float& newValue)      //12
     {
         std::cout << "U's f1 value: " << f1 << std::endl;
-        if (newValue == nullptr) return 0;
-        f1 = *newValue;
+        f1 = newValue;
         std::cout << "U's f1 updated value: " << f1 << std::endl;
         while(std::abs(f2 - f1) > 0.001f)
         {
@@ -69,54 +66,42 @@ struct U
 
 struct Mult
 {
-    static float multiply(U* that, float* newValue)    //10
+    static float multiply(U& that, const float& newValue)    //10
     {
-        std::cout << "U's f1 value: " << that->f1 << std::endl;
-        if (that == nullptr || newValue == nullptr) return 0;
-        that->f1 = *newValue;
-        std::cout << "U's f1 updated value: " << that->f1 << std::endl;
-        while( std::abs(that->f2 - that->f1) > 0.001f)
+        std::cout << "U's f1 value: " << that.f1 << std::endl;
+        that.f1 = newValue;
+        std::cout << "U's f1 updated value: " << that.f1 << std::endl;
+        while( std::abs(that.f2 - that.f1) > 0.001f)
         {
             /*
              write something that makes the distance between that->f2 and that->f1 get smaller
              */
-            if (that->f1 > that->f2) 
+            if (that.f1 > that.f2) 
             {
-                that->f2 += 0.001f;
+                that.f2 += 0.001f;
             }
-            else that->f2 -= 0.001f;
+            else that.f2 -= 0.001f;
         }
-        std::cout << "U's f2 updated value: " << that->f2 << std::endl;
-        return that->f2 * that->f1;
+        std::cout << "U's f2 updated value: " << that.f2 << std::endl;
+        return that.f2 * that.f1;
     }
 };
         
 int main()
 {
     T aTinstance(0.05f , "aTinstance");                                   //6
-    T anotherTinstance(0.7f, "anotherTinstance");                       //6
+    T anotherTinstance(0.7f, "anotherTinstance");                      //6
     
     Comparator f;                                            //7
     
-    auto* smaller = f.compare(&aTinstance, &anotherTinstance);          //8
+    auto smaller = f.compare(aTinstance, anotherTinstance);          //8
     
-    if (smaller != nullptr)
-    {
-        std::cout << "the smaller one is << " << smaller->name << std::endl; //9
-    }
+    std::cout << "the smaller one is << " << smaller.name << std::endl; //9
 
     U aUinstance;
     float updatedValue = 5.f;
-    std::cout << "[static func] aUinstance's multiplied values: " << Mult::multiply(&aUinstance, &updatedValue) << std::endl;                  //11
+    std::cout << "[static func] aUinstance's multiplied values: " << Mult::multiply(aUinstance, updatedValue) << std::endl;                  //11
     
     U anotherUinstance;
-    std::cout << "[member func] anotherUinstance's multiplied values: " << anotherUinstance.multiply(&updatedValue) << std::endl;
+    std::cout << "[member func] anotherUinstance's multiplied values: " << anotherUinstance.multiply(updatedValue) << std::endl;
 }
-
-        
-        
-        
-        
-        
-        
-        
