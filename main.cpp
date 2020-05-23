@@ -31,10 +31,12 @@ struct T
 
 struct Comparator                                //4
 {
-    T* compare(T* a, T* b)//5
+    T* compare(T& a, T& b)//5
     {
-        if(a->value < b->value) return a;
-        if(a->value > b->value) return b;
+        T* aptr = &a;
+        T* bptr = &b;
+        if(a.value < b.value) return aptr;
+        if(a.value > b.value) return bptr;
         return nullptr;   
     }
 };
@@ -93,7 +95,7 @@ int main()
     
     Comparator f;                                            //7
     
-    auto* smaller = f.compare(&aTinstance, &anotherTinstance);          //8
+    auto* smaller = f.compare(aTinstance, anotherTinstance);          //8
     
     if (smaller != nullptr)
     {
