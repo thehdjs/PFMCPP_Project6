@@ -31,12 +31,11 @@ struct T
 
 struct Comparator                                //4
 {
-    T compare(T& a, T& b)//5
+    T* compare(T* a, T* b)//5
     {
-        if(a.value < b.value) return a;
-        if(a.value > b.value) return b;
-        T noneOfThem(0, "none of them");
-        return noneOfThem;
+        if(a->value < b->value) return a;
+        if(a->value > b->value) return b;
+        return nullptr;   
     }
 };
 
@@ -90,13 +89,13 @@ struct Mult
 int main()
 {
     T aTinstance(0.05f , "aTinstance");                                   //6
-    T anotherTinstance(0.7f, "anotherTinstance");                      //6
+    T anotherTinstance(0.7f, "anotherTinstance");                       //6
     
     Comparator f;                                            //7
     
-    auto smaller = f.compare(aTinstance, anotherTinstance);          //8
+    auto* smaller = f.compare(&aTinstance, &anotherTinstance);          //8
     
-    std::cout << "the smaller one is << " << smaller.name << std::endl; //9
+    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
 
     U aUinstance;
     float updatedValue = 5.f;
