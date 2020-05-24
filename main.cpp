@@ -33,10 +33,8 @@ struct Comparator                                //4
 {
     T* compare(T& a, T& b)//5
     {
-        T* aptr = &a;
-        T* bptr = &b;
-        if(a.value < b.value) return aptr;
-        if(a.value > b.value) return bptr;
+        if(a.value < b.value) return &a;
+        if(a.value > b.value) return &b;
         return nullptr;   
     }
 };
